@@ -4,9 +4,9 @@ You'll make an API to manage your playlists with different songs, stored in a po
 
 ## Authentication
 
-  * A user should be able to sign up by posting `email`, `password`, and `password_confirmation` to `/users`
-  * A user should be able to sign in by posting to `/tokens` and get a response `{ token: "<JWT>" }`
-  * A user should be able to authenticate using an `Authorization` header with a `Bearer <JWT>`
+  /* A user should be able to sign up by posting `email`, `password`, and `password_confirmation` to `/users`
+  /* A user should be able to sign in by posting to `/tokens` and get a response `{ token: "<JWT>" }`
+  /* A user should be able to authenticate using an `Authorization` header with a `Bearer <JWT>`
 
 ## Playlists
 

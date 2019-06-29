@@ -1,10 +1,10 @@
-const express = require('express')
-const router = express.Router()
+const { Router } = require('express')
 const Song = require('./model')
-// const { Router } = require('express')
-// const router = new Router
+const auth = require('../auth/middleware')
 
-router.get('/playlists/:id/songs', function (req, res, next) {
+const router = new Router
+
+router.get('/playlists/:id/songs', auth, function (req, res, next) {
     const limit = req.query.limit || 10
     const offset = req.query.offset || 0
 
@@ -24,7 +24,7 @@ router.get('/playlists/:id/songs', function (req, res, next) {
         })
 })
 
-router.post('/playlists/:id/songs', function (req, res, next) {
+router.post('/playlists/:id/songs', auth, function (req, res, next) {
     Song
         .create(req.body)
         .then(song => res.status(201).send(song))

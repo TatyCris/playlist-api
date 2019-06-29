@@ -1,10 +1,10 @@
-const express = require('express')
-const router = express.Router()
+const { Router } = require('express')
 const Playlist = require('./model')
-// const { Router } = require('express')
-// const router = new Router
+const auth = require('../auth/middleware')
 
-router.get('/playlists', function (req, res, next) {
+const router = new Router
+
+router.get('/playlists', auth, function (req, res, next) {
     const limit = req.query.limit || 7
     const offset = req.query.offset || 0
 
@@ -24,7 +24,7 @@ router.get('/playlists', function (req, res, next) {
         })
 })
 
-router.post('/playlists', function (req, res, next) {
+router.post('/playlists', auth, function (req, res, next) {
     Playlist
         .create(req.body)
         .then(playlist => res.status(201).send(playlist))
@@ -37,7 +37,7 @@ router.post('/playlists', function (req, res, next) {
         })
 })
 
-router.get('/playlists/:id', function (req, res, next) {
+router.get('/playlists/:id', auth, function (req, res, next) {
     const { id } = req.params
     Playlist
         .findByPk(id)
@@ -51,7 +51,7 @@ router.get('/playlists/:id', function (req, res, next) {
         })
 })
 
-router.delete('/playlists/:id', function (req, res) {
+router.delete('/playlists/:id', auth, function (req, res) {
     const { id } = req.params
     Playlist
         .destroy({ where: { id } })
@@ -65,7 +65,7 @@ router.delete('/playlists/:id', function (req, res) {
         })
 })
 
-router.put('/playlists/:id', function (req, res, next) {
+router.put('/playlists/:id', auth, function (req, res, next) {
     const { id } = req.params
     const { name } = req.body
     Playlist

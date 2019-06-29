@@ -8,8 +8,8 @@ const Playlist = require('./playlist/model')
 const playlistRouter = require('./playlist/router')
 const Songs = require('./songs/model')
 const songsRouter = require('./songs/router')
-// const authRouter = require('./auth/router')
-// const userRouter = require('./user/router')
+const authRouter = require('./auth/router')
+const userRouter = require('./user/router')
 
 app.listen(port, function () {
     console.log(`Web server listening on port :${port}`)
@@ -18,5 +18,5 @@ app.listen(port, function () {
 app.use(jsonParser)
 app.use(playlistRouter)
 app.use(songsRouter)
-// app.use(authRouter)
-// app.use(userRouter)
+app.use(authRouter)
+app.use(userRouter)
