@@ -17,11 +17,11 @@ You'll make an API to manage your playlists with different songs, stored in a po
 
 ## Songs
 
-  * `POST /playlists/:id/songs`: A user should be able to add songs to their playlists. A song has:
-    * A title
-    * An artist (name)
-    * An album (title)
-  * A song can only be on one playlist.
+  /* `POST /playlists/:id/songs`: A user should be able to add songs to their playlists. A song has:
+    /* A title
+    /* An artist (name)
+    /* An album (title)
+  /* A song can only be on one playlist.
 
 ## Authorization
 

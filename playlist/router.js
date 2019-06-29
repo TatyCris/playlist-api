@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
-// const { Router } = require('express')
 const Playlist = require('./model')
+// const { Router } = require('express')
 // const router = new Router
 
 router.get('/playlists', function (req, res, next) {
-    const limit = req.query.limit || 10
+    const limit = req.query.limit || 7
     const offset = req.query.offset || 0
 
     Promise.all([
