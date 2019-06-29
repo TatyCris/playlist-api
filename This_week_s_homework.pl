@@ -10,10 +10,10 @@ You'll make an API to manage your playlists with different songs, stored in a po
 
 ## Playlists
 
-  * `POST /playlists`: A user should be able to create a playlist (with just a name)
-  * `GET /playlists`: A user should be able to retrieve all their playlists
-  * `GET /playlists/:id`: A user should be able to get a single one of their playlists, with all the songs on it (but no others).
-  * `DELETE /playlists/:id`: A user may delete their playlists, and all songs on it.
+  /* `POST /playlists`: A user should be able to create a playlist (with just a name)
+  /* `GET /playlists`: A user should be able to retrieve all their playlists
+  /* `GET /playlists/:id`: A user should be able to get a single one of their playlists, with all the songs on it (but no others).
+  /* `DELETE /playlists/:id`: A user may delete their playlists, and all songs on it.
 
 ## Songs
 
