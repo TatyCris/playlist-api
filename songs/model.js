@@ -6,6 +6,7 @@ const Song = db.define('songs',
     {
         title: {
             type: Sequelize.STRING,
+            allowNull: false,
             field: 'title'
         },
         artist: {

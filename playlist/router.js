@@ -4,15 +4,15 @@ const auth = require('../auth/middleware')
 
 const router = new Router
 
-router.get('/playlists', auth, function (req, res, next) {
+router.get('/playlists', auth, function(req, res, next) {
     const limit = req.query.limit || 7
     const offset = req.query.offset || 0
 
     Promise.all([
-        Playlist.count(),
-        Playlist.findAll({ limit, offset })
+        Playlist.findAll({ where: { userId: req.user.id }, limit, offset }),
+        Playlist.count({ where: { userId: req.user.id }, limit, offset })
     ])
-        .then(([total, playlist]) => {
+        .then(([playlist, total]) => {
             res.status(200).send({ playlist, total })
         })
         .catch(err => {
@@ -24,10 +24,13 @@ router.get('/playlists', auth, function (req, res, next) {
         })
 })
 
-router.post('/playlists', auth, function (req, res, next) {
+router.post('/playlists', auth, function(req, res, next) {
+    req.body.userId = req.user.dataValues.id
     Playlist
         .create(req.body)
-        .then(playlist => res.status(201).send(playlist))
+        .then(playlist => {
+            res.status(201).send(playlist)
+        })
         .catch(err => {
             res.status(422).json({
                 message: `Resource can't be saved or updated`,
@@ -37,10 +40,16 @@ router.post('/playlists', auth, function (req, res, next) {
         })
 })
 
-router.get('/playlists/:id', auth, function (req, res, next) {
+router.get('/playlists/:id', auth, function(req, res, next) {
     const { id } = req.params
+
     Playlist
-        .findByPk(id)
+        .findOne({
+            where: {
+                id,
+                userId: req.user.dataValues.id
+            }
+        })
         .then(playlist => res.status(200).send(playlist))
         .catch(err => {
             res.status(404).json({
@@ -51,30 +60,16 @@ router.get('/playlists/:id', auth, function (req, res, next) {
         })
 })
 
-router.delete('/playlists/:id', auth, function (req, res) {
+router.delete('/playlists/:id', auth, function(req, res, next) {
     const { id } = req.params
     Playlist
-        .destroy({ where: { id } })
-        .then(playlist => res.status(200).send(playlist))
-        .catch(err => {
-            res.status(422).json({
-                message: `Resource can't be saved or updated`,
-                error: err
-            })
-            next(err)
+        .destroy({
+            where: {
+                id,
+                userId: req.user.dataValues.id
+            }
         })
-})
-
-router.put('/playlists/:id', auth, function (req, res, next) {
-    const { id } = req.params
-    const { name } = req.body
-    Playlist
-        .findByPk(id)
-        .then(playlist => playlist.update({ name }))
-        .then(playlist => res.status(200).json({
-            message: 'Playlist updated!',
-            playlist
-        }))
+        .then(playlist => res.status(200).send(playlist))
         .catch(err => {
             res.status(422).json({
                 message: `Resource can't be saved or updated`,
