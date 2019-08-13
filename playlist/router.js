@@ -71,10 +71,10 @@ router.delete('/playlists/:id', auth, function(req, res, next) {
         })
         .then(playlist => res.status(200).send(playlist))
         .catch(err => {
-            res.status(422).json({
-                message: `Resource can't be saved or updated`,
-                error: err
-            })
+            // res.status(422).json({
+            //     message: `Resource can't be saved or updated`,
+            //     error: err
+            // })
             next(err)
         })
 })
