@@ -4,14 +4,15 @@ const auth = require('../auth/middleware')
 
 const router = new Router
 
-router.get('/playlists', auth, function(req, res, next) {
+router.get('/playlists', auth, function (req, res, next) {
     const limit = req.query.limit || 7
     const offset = req.query.offset || 0
 
-    Promise.all([
-        Playlist.findAll({ where: { userId: req.user.id }, limit, offset }),
-        Playlist.count({ where: { userId: req.user.id }, limit, offset })
-    ])
+    Promise
+        .all([
+            Playlist.findAll({ where: { userId: req.user.id }, limit, offset }),
+            Playlist.count({ where: { userId: req.user.id }, limit, offset })
+        ])
         .then(([playlist, total]) => {
             res.status(200).send({ playlist, total })
         })
@@ -24,7 +25,7 @@ router.get('/playlists', auth, function(req, res, next) {
         })
 })
 
-router.post('/playlists', auth, function(req, res, next) {
+router.post('/playlists', auth, function (req, res, next) {
     req.body.userId = req.user.dataValues.id
     Playlist
         .create(req.body)
@@ -40,7 +41,7 @@ router.post('/playlists', auth, function(req, res, next) {
         })
 })
 
-router.get('/playlists/:id', auth, function(req, res, next) {
+router.get('/playlists/:id', auth, function (req, res, next) {
     const { id } = req.params
 
     Playlist
@@ -60,7 +61,7 @@ router.get('/playlists/:id', auth, function(req, res, next) {
         })
 })
 
-router.delete('/playlists/:id', auth, function(req, res, next) {
+router.delete('/playlists/:id', auth, function (req, res, next) {
     const { id } = req.params
     Playlist
         .destroy({

@@ -1,12 +1,9 @@
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 4000
-const db = require('./db')
 const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json()
-const Playlist = require('./playlist/model')
 const playlistRouter = require('./playlist/router')
-const Songs = require('./songs/model')
 const songsRouter = require('./songs/router')
 const authRouter = require('./auth/router')
 const userRouter = require('./user/router')

@@ -14,7 +14,7 @@ router.post('/users', function (req, res, next) {
             message: 'Please supply a valid email and password'
         })
     } else if (!password_confirmation) {
-        res.status(204).send({
+        res.status(401).send({
             message: 'Please confirm your password'
         })
     } else {
