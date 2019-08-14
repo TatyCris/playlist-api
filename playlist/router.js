@@ -64,20 +64,10 @@ router.get('/playlists/:id', auth, function (req, res, next) {
 router.delete('/playlists/:id', auth, function (req, res, next) {
     const { id } = req.params
     Playlist
-        .destroy({
-            where: {
-                id,
-                userId: req.user.dataValues.id
-            }
-        })
-        .then(playlist => res.status(200).send(playlist))
-        .catch(err => {
-            // res.status(422).json({
-            //     message: `Resource can't be saved or updated`,
-            //     error: err
-            // })
-            next(err)
-        })
+        .findByPk(id)
+        .then(playlist => playlist.destroy())
+        .then(playlist => res.status(200).send('Deleted successfully'))
+        .catch(err => next(err))
 })
 
 module.exports = router
